@@ -51,7 +51,7 @@ namespace DAL.CentralCave.Factories
         /// Make an Accounts Repository
         /// </summary>
         /// <returns>Accounts Repository</returns>
-        public IGetterRelationship<Account, Movement> GetAccountRepository()
+        public IAccountRelationship<Account, Movement> GetAccountRepository()
         {
             return new AccountRepository();
         }

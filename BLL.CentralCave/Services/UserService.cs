@@ -9,7 +9,7 @@ namespace BLL.CentralCave.Services
 {
     public sealed class UserService : BaseService, IUserService
     {
-        IGetterRelationship<Account, Movement> accountRepository = Factory.Current.GetAccountRepository();
+        IAccountRelationship<Account, Movement> accountRepository = Factory.Current.GetAccountRepository();
         IUserRepository userRepository = Factory.Current.GetUserRepository();
 
         #region Singleton
@@ -47,8 +47,8 @@ namespace BLL.CentralCave.Services
                     throw new InvalidCredentialsException("the name or password does not match");
                 }
 
-                user.SavingAccount = accountRepository.GetOne(user.IdSavingAccount);
-                user.Wallet = accountRepository.GetOne(user.IdWallet);
+                user.SavingAccount = accountRepository.GetSavingAccount(user.Id);
+                user.Wallet = accountRepository.GetWallet(user.Id);
                 return user;
             });
         }

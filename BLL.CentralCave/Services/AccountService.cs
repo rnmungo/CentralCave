@@ -13,7 +13,7 @@ namespace BLL.CentralCave.Services
     {
         IInserter<Movement> movementRepository = Factory.Current.GetMovementRepository();
         IInserter<Transaction> transactionRepository = Factory.Current.GetTransactionRepository();
-        IGetterRelationship<Account, Movement> accountRepository = Factory.Current.GetAccountRepository();
+        IAccountRelationship<Account, Movement> accountRepository = Factory.Current.GetAccountRepository();
         IGetterConversion conversionRepository = Factory.Current.GetConversionRepository();
 
         #region Singleton
@@ -150,10 +150,12 @@ namespace BLL.CentralCave.Services
             }, options);
         }
 
-        public Account GetOne(long cbu) => accountRepository.GetOne(cbu);
-
         public decimal GetSaldo(Account account) => accountRepository.GetRelated(account).Sum(m => m.Amount);
 
         public List<Movement> GetMovements(Account account) => accountRepository.GetRelated(account);
+
+        public Account GetWallet(Guid idUser) => accountRepository.GetWallet(idUser);
+
+        public Account GetSavingAccount(Guid idUser) => accountRepository.GetSavingAccount(idUser);
     }
 }

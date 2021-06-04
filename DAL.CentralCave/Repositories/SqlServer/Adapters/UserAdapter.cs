@@ -24,8 +24,6 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
             {
                 Id = Guid.Parse(values[(int)Columns.ID].ToString()),
                 Name = values[(int)Columns.NAME].ToString(),
-                IdWallet = Guid.Parse(values[(int)Columns.ID_WALLET].ToString()),
-                IdSavingAccount = Guid.Parse(values[(int)Columns.ID_SAVING_ACCOUNT].ToString())
             };
         }
 
@@ -33,8 +31,6 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
         {
             ID,
             NAME,
-            ID_WALLET,
-            ID_SAVING_ACCOUNT
         }
     }
 }

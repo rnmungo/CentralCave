@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IGetterConversion.cs" />
-    <Compile Include="Contracts\IGetterRelationship.cs" />
+    <Compile Include="Contracts\IAccountRelationship.cs" />
     <Compile Include="Contracts\IEntityAdapter.cs" />
     <Compile Include="Contracts\IRelationship.cs" />
     <Compile Include="Contracts\IGetter.cs" />

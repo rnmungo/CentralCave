@@ -8,17 +8,17 @@ using DAL.CentralCave.Repositories.SqlServer.Adapters;
 
 namespace DAL.CentralCave.Repositories.SqlServer
 {
-    public class AccountRepository : IGetterRelationship<Account, Movement>
+    public class AccountRepository : IAccountRelationship<Account, Movement>
     {
         #region Statements
-        private string SelectOneByIDStatement
+        private string SelectOneWalletStatement
         {
-            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE Id = @Id";
+            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE IdUser = @IdUser AND CUIT IS NULL";
         }
 
-        private string SelectOneByCBUStatement
+        private string SelectOneSavingAccountStatement
         {
-            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE CBU = @CBU";
+            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE IdUser = @IdUser AND CUIT IS NOT NULL";
         }
 
         private string SelectAllRelationsStatement
@@ -27,13 +27,13 @@ namespace DAL.CentralCave.Repositories.SqlServer
         }
         #endregion
 
-        public Account GetOne(Guid id)
+        public Account GetWallet(Guid idUser)
         {
             Account account = default;
 
             try
             {
-                using (var dr = SqlHelper.ExecuteReader(SelectOneByIDStatement, System.Data.CommandType.Text, new SqlParameter("@Id", id)))
+                using (var dr = SqlHelper.ExecuteReader(SelectOneWalletStatement, System.Data.CommandType.Text, new SqlParameter("@IdUser", idUser)))
                 {
                     if (dr.Read())
                     {
@@ -51,13 +51,13 @@ namespace DAL.CentralCave.Repositories.SqlServer
             return account;
         }
 
-        public Account GetOne(long code)
+        public Account GetSavingAccount(Guid idUser)
         {
             Account account = default;
 
             try
             {
-                using (var dr = SqlHelper.ExecuteReader(SelectOneByCBUStatement, System.Data.CommandType.Text, new SqlParameter("@CBU", code)))
+                using (var dr = SqlHelper.ExecuteReader(SelectOneSavingAccountStatement, System.Data.CommandType.Text, new SqlParameter("@IdUser", idUser)))
                 {
                     if (dr.Read())
                     {
