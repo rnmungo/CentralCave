@@ -81,5 +81,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL.CentralCave\BLL.CentralCave.csproj">
+      <Project>{dcbcab20-15a1-4b42-bbce-f9d3d8b0bb1f}</Project>
+      <Name>BLL.CentralCave</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.CentralCave\Domain.CentralCave.csproj">
+      <Project>{2cf3068d-1b9e-4a0c-bfa0-077a3ff1bcb9}</Project>
+      <Name>Domain.CentralCave</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SL.CentralCave\SL.CentralCave.csproj">
+      <Project>{f3926a22-ceff-46fa-95b5-a9ea58b55404}</Project>
+      <Name>SL.CentralCave</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
