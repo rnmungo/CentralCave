@@ -66,6 +66,7 @@ namespace UI.CentralCave.Forms.Accounts
                 AccountService.Current.Deposit(_user.SavingAccount, tbARS.Value);
                 MessageBox.Show("the deposit was successful");
                 LoadAccountsData();
+                tbARS.Value = 0;
             }
             catch (InvalidTransactionException ex)
             {
@@ -76,7 +77,10 @@ namespace UI.CentralCave.Forms.Accounts
         private void btnTransferARS_Click(object sender, EventArgs e)
         {
             TransferForm form = new TransferForm(_user.SavingAccount);
-            form.ShowDialog();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadAccountsData();
+            }
         }
 
         private void btnBuyBTC_Click(object sender, EventArgs e)
@@ -86,6 +90,7 @@ namespace UI.CentralCave.Forms.Accounts
                 AccountService.Current.ConvertTo(_user.SavingAccount, _user.Wallet, tbARS.Value);
                 MessageBox.Show("the purchase was successful");
                 LoadAccountsData();
+                tbARS.Value = 0;
             }
             catch (InvalidTransactionException ex)
             {
@@ -100,6 +105,7 @@ namespace UI.CentralCave.Forms.Accounts
                 AccountService.Current.Deposit(_user.Wallet, tbBTC.Value);
                 MessageBox.Show("the deposit was successful");
                 LoadAccountsData();
+                tbBTC.Value = 0;
             }
             catch (InvalidTransactionException ex)
             {
@@ -110,7 +116,10 @@ namespace UI.CentralCave.Forms.Accounts
         private void btnTransferBTC_Click(object sender, EventArgs e)
         {
             TransferForm form = new TransferForm(_user.Wallet);
-            form.ShowDialog();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadAccountsData();
+            }
         }
 
         private void btnBuyARS_Click(object sender, EventArgs e)
@@ -120,6 +129,7 @@ namespace UI.CentralCave.Forms.Accounts
                 AccountService.Current.ConvertTo(_user.Wallet, _user.SavingAccount, tbBTC.Value);
                 MessageBox.Show("the purchase was successful");
                 LoadAccountsData();
+                tbBTC.Value = 0;
             }
             catch (InvalidTransactionException ex)
             {

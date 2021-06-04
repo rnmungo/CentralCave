@@ -40,6 +40,7 @@ namespace UI.CentralCave
             this.label1 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.rightPanel = new System.Windows.Forms.Panel();
+            this.btnLogout = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -82,6 +83,7 @@ namespace UI.CentralCave
             // leftPanel
             // 
             this.leftPanel.BackColor = System.Drawing.Color.GhostWhite;
+            this.leftPanel.Controls.Add(this.btnLogout);
             this.leftPanel.Controls.Add(this.label3);
             this.leftPanel.Controls.Add(this.btnLogin);
             this.leftPanel.Controls.Add(this.label2);
@@ -162,6 +164,21 @@ namespace UI.CentralCave
             this.rightPanel.Size = new System.Drawing.Size(544, 440);
             this.rightPanel.TabIndex = 2;
             // 
+            // btnLogout
+            // 
+            this.btnLogout.BackColor = System.Drawing.Color.Indigo;
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnLogout.Location = new System.Drawing.Point(30, 173);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(150, 38);
+            this.btnLogout.TabIndex = 11;
+            this.btnLogout.Text = "CERRAR SESIÓN";
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Visible = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,6 +213,7 @@ namespace UI.CentralCave
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox btnClose;
+        private System.Windows.Forms.Button btnLogout;
     }
 }
 

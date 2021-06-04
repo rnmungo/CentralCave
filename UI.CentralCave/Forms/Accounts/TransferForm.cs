@@ -35,6 +35,7 @@ namespace UI.CentralCave.Forms.Accounts
                 Account destination = AccountService.Current.GetByCBU(long.Parse(tbCBU.Text));
                 AccountService.Current.Transfer(_account, destination, tbAmount.Value);
                 MessageBox.Show("the transfer was successful");
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch(FormatException)
