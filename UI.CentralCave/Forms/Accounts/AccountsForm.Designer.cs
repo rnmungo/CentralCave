@@ -137,7 +137,7 @@ namespace UI.CentralCave.Forms.Accounts
             this.lbCBUSA.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbCBUSA.Location = new System.Drawing.Point(13, 61);
             this.lbCBUSA.Name = "lbCBUSA";
-            this.lbCBUSA.Size = new System.Drawing.Size(180, 21);
+            this.lbCBUSA.Size = new System.Drawing.Size(246, 21);
             this.lbCBUSA.TabIndex = 10;
             this.lbCBUSA.Text = "CBU:";
             this.lbCBUSA.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -147,7 +147,7 @@ namespace UI.CentralCave.Forms.Accounts
             this.lbCUIT.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbCUIT.Location = new System.Drawing.Point(13, 82);
             this.lbCUIT.Name = "lbCUIT";
-            this.lbCUIT.Size = new System.Drawing.Size(139, 21);
+            this.lbCUIT.Size = new System.Drawing.Size(246, 21);
             this.lbCUIT.TabIndex = 11;
             this.lbCUIT.Text = "CUIT:";
             this.lbCUIT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -157,7 +157,7 @@ namespace UI.CentralCave.Forms.Accounts
             this.lbCBUW.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbCBUW.Location = new System.Drawing.Point(274, 61);
             this.lbCBUW.Name = "lbCBUW";
-            this.lbCBUW.Size = new System.Drawing.Size(172, 21);
+            this.lbCBUW.Size = new System.Drawing.Size(251, 21);
             this.lbCBUW.TabIndex = 13;
             this.lbCBUW.Text = "CBU:";
             this.lbCBUW.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -335,7 +335,7 @@ namespace UI.CentralCave.Forms.Accounts
             this.lbSaldoARS.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbSaldoARS.Location = new System.Drawing.Point(12, 102);
             this.lbSaldoARS.Name = "lbSaldoARS";
-            this.lbSaldoARS.Size = new System.Drawing.Size(40, 21);
+            this.lbSaldoARS.Size = new System.Drawing.Size(247, 21);
             this.lbSaldoARS.TabIndex = 26;
             this.lbSaldoARS.Text = "Saldo:";
             this.lbSaldoARS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -345,7 +345,7 @@ namespace UI.CentralCave.Forms.Accounts
             this.lbSaldoBTC.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbSaldoBTC.Location = new System.Drawing.Point(274, 83);
             this.lbSaldoBTC.Name = "lbSaldoBTC";
-            this.lbSaldoBTC.Size = new System.Drawing.Size(40, 21);
+            this.lbSaldoBTC.Size = new System.Drawing.Size(251, 21);
             this.lbSaldoBTC.TabIndex = 27;
             this.lbSaldoBTC.Text = "Saldo:";
             this.lbSaldoBTC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

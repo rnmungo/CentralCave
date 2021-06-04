@@ -25,7 +25,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
             {
                 Id = Guid.Parse(values[(int)Columns.ID].ToString()),
                 CreatedAt = DateTime.Parse(values[(int)Columns.CREATED_AT].ToString()),
-                Rate = long.Parse(values[(int)Columns.RATE].ToString()),
+                Rate = decimal.Parse(values[(int)Columns.RATE].ToString()),
                 Origin = (Currency)int.Parse(values[(int)Columns.ORIGIN].ToString()),
                 Destination = (Currency)int.Parse(values[(int)Columns.DESTINATION].ToString()),
             };

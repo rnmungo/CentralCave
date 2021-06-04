@@ -52,7 +52,8 @@ namespace BLL.CentralCave.Services
                 }
 
                 List<Movement> movements = accountRepository.GetRelated(origin);
-                if (movements.Sum(m => m.Amount) < amount)
+                decimal saldo = movements.Sum(m => m.Amount);
+                if (saldo < amount)
                 {
                     throw new InvalidTransactionException("the balance is insufficient");
                 }
@@ -128,7 +129,8 @@ namespace BLL.CentralCave.Services
             SurroundTransaction(() =>
             {
                 List<Movement> movements = accountRepository.GetRelated(origin);
-                if (movements.Sum(m => m.Amount) < amount)
+                decimal saldo = movements.Sum(m => m.Amount);
+                if (saldo < amount)
                 {
                     throw new InvalidTransactionException("the balance is insufficient");
                 }
@@ -159,5 +161,7 @@ namespace BLL.CentralCave.Services
         public decimal GetSaldo(Account account) => accountRepository.GetRelated(account).Sum(m => m.Amount);
 
         public List<Movement> GetMovements(Account account) => accountRepository.GetRelated(account);
+
+        public Account GetByCBU(long cbu) => accountRepository.GetOne(cbu);
     }
 }

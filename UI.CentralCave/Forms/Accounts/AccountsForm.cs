@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Forms;
 using BLL.CentralCave.BusinessExceptions;
 using BLL.CentralCave.Services;
-using BLL.CentralCave.BusinessExceptions;
 using Domain.CentralCave;
-using SL.CentralCave.Services;
 
 namespace UI.CentralCave.Forms.Accounts
 {
@@ -33,11 +30,12 @@ namespace UI.CentralCave.Forms.Accounts
 
         private void BindTable(List<Movement> movements)
         {
+            dgvMovements.Rows.Clear();
             foreach (Movement movement in movements)
             {
                 DataGridViewRow fila = new DataGridViewRow();
                 fila.CreateCells(dgvMovements);
-                fila.Cells[0].Value = movement.CreatedAt.ToLongDateString();
+                fila.Cells[0].Value = movement.CreatedAt.ToShortDateString();
                 fila.Cells[1].Value = movement.Reason.ToString();
                 fila.Cells[2].Value = movement.IdTransaction.ToString();
                 fila.Cells[3].Value = movement.Amount.ToString();
@@ -55,8 +53,10 @@ namespace UI.CentralCave.Forms.Accounts
             lbCBUSA.Text = $"CBU: {_user.SavingAccount.CBU}";
             lbCBUW.Text = $"CBU: {_user.Wallet.CBU}";
             lbCUIT.Text = $"CUIT: {_user.CUIT}";
-            lbSaldoARS.Text = $"Saldo: {string.Format("{0:C}", AccountService.Current.GetSaldo(_user.SavingAccount))}";
-            lbSaldoBTC.Text = $"Saldo: {string.Format("{0:C}", AccountService.Current.GetSaldo(_user.Wallet))}";
+            decimal saldoARS = AccountService.Current.GetSaldo(_user.SavingAccount);
+            decimal saldoBTC = AccountService.Current.GetSaldo(_user.Wallet);
+            lbSaldoARS.Text = $"Saldo: {string.Format("{0:C}", saldoARS)}";
+            lbSaldoBTC.Text = $"Saldo: {string.Format("{0:C}", saldoBTC)}";
         }
 
         private void btnDepositARS_Click(object sender, EventArgs e)
@@ -64,21 +64,33 @@ namespace UI.CentralCave.Forms.Accounts
             try
             {
                 AccountService.Current.Deposit(_user.SavingAccount, tbARS.Value);
+                MessageBox.Show("the deposit was successful");
+                LoadAccountsData();
             }
             catch (InvalidTransactionException ex)
             {
-                MessageBox.Show(LanguageManager.Current.Translate(ex.Message));
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void btnTransferARS_Click(object sender, EventArgs e)
         {
-
+            TransferForm form = new TransferForm(_user.SavingAccount);
+            form.ShowDialog();
         }
 
         private void btnBuyBTC_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                AccountService.Current.ConvertTo(_user.SavingAccount, _user.Wallet, tbARS.Value);
+                MessageBox.Show("the purchase was successful");
+                LoadAccountsData();
+            }
+            catch (InvalidTransactionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnDepositBTC_Click(object sender, EventArgs e)
@@ -86,21 +98,33 @@ namespace UI.CentralCave.Forms.Accounts
             try
             {
                 AccountService.Current.Deposit(_user.Wallet, tbBTC.Value);
+                MessageBox.Show("the deposit was successful");
+                LoadAccountsData();
             }
             catch (InvalidTransactionException ex)
             {
-                MessageBox.Show(LanguageManager.Current.Translate(ex.Message));
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void btnTransferBTC_Click(object sender, EventArgs e)
         {
-
+            TransferForm form = new TransferForm(_user.Wallet);
+            form.ShowDialog();
         }
 
         private void btnBuyARS_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                AccountService.Current.ConvertTo(_user.Wallet, _user.SavingAccount, tbBTC.Value);
+                MessageBox.Show("the purchase was successful");
+                LoadAccountsData();
+            }
+            catch (InvalidTransactionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

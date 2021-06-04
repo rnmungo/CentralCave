@@ -10,6 +10,7 @@ namespace BLL.CentralCave.Contracts
         void ConvertTo(Account origin, Account destination, decimal amount);
         void Transfer(Account origin, Account destination, decimal amount);
         decimal GetSaldo(Account account);
+        Account GetByCBU(long cbu);
         List<Movement> GetMovements(Account account);
     }
 }

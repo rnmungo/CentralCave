@@ -17,6 +17,11 @@ namespace DAL.CentralCave.Repositories.SqlServer
             get => "SELECT Id, CreatedAt, CBU, Currency, IdUser FROM [dbo].[Accounts] WHERE IdUser = @IdUser AND Currency = @Currency";
         }
 
+        private string SelectByCBUStatement
+        {
+            get => "SELECT Id, CreatedAt, CBU, Currency, IdUser FROM [dbo].[Accounts] WHERE CBU = @CBU";
+        }
+
         private string SelectAllRelationsStatement
         {
             get => "SELECT Id, CreatedAt, Reason, IdAccount, Amount, IdTransaction FROM [dbo].[Movements] WHERE IdAccount = @IdAccount";
@@ -34,6 +39,33 @@ namespace DAL.CentralCave.Repositories.SqlServer
                     System.Data.CommandType.Text,
                     new SqlParameter("@IdUser", idUser),
                     new SqlParameter("@Currency", currency)))
+                {
+                    if (dr.Read())
+                    {
+                        object[] values = new object[dr.FieldCount];
+                        dr.GetValues(values);
+                        account = AccountAdapter.Current.Adapt(values);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return account;
+        }
+
+        public Account GetOne(long cbu)
+        {
+            Account account = default;
+
+            try
+            {
+                using (var dr = SqlHelper.ExecuteReader(
+                    SelectByCBUStatement,
+                    System.Data.CommandType.Text,
+                    new SqlParameter("@CBU", cbu)))
                 {
                     if (dr.Read())
                     {
