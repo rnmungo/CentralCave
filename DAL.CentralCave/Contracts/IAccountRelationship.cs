@@ -1,10 +1,10 @@
 ﻿using System;
+using Domain.CentralCave.Enums;
 
 namespace DAL.CentralCave.Contracts
 {
     public interface IAccountRelationship<T, U> : IRelationship<T, U>
     {
-        T GetWallet(Guid idUser);
-        T GetSavingAccount(Guid idUser);
+        T GetOne(Guid idUser, Currency currency);
     }
 }

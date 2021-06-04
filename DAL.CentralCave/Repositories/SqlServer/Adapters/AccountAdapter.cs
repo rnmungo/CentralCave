@@ -26,7 +26,6 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
                 Id = Guid.Parse(values[(int)Columns.ID].ToString()),
                 CreatedAt = DateTime.Parse(values[(int)Columns.CREATED_AT].ToString()),
                 CBU = long.Parse(values[(int)Columns.CBU].ToString()),
-                CUIT = long.Parse(values[(int)Columns.CUIT].ToString()),
                 Currency = (Currency)int.Parse(values[(int)Columns.CURRENCY].ToString()),
                 IdUser = Guid.Parse(values[(int)Columns.ID_USER].ToString())
             };
@@ -37,7 +36,6 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
             ID,
             CREATED_AT,
             CBU,
-            CUIT,
             CURRENCY,
             ID_USER
         }

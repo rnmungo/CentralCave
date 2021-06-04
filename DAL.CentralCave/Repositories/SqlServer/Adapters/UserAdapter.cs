@@ -24,6 +24,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
             {
                 Id = Guid.Parse(values[(int)Columns.ID].ToString()),
                 Name = values[(int)Columns.NAME].ToString(),
+                CUIT = long.Parse(values[(int)Columns.CUIT].ToString())
             };
         }
 
@@ -31,6 +32,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
         {
             ID,
             NAME,
+            CUIT
         }
     }
 }

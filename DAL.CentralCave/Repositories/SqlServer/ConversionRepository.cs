@@ -40,7 +40,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
 
             return conversion;

@@ -1,6 +1,7 @@
 ﻿using DAL.CentralCave.Contracts;
 using DAL.CentralCave.Factories;
 using Domain.CentralCave;
+using Domain.CentralCave.Enums;
 using SL.CentralCave.Services;
 using BLL.CentralCave.BusinessExceptions;
 using BLL.CentralCave.Contracts;
@@ -47,8 +48,8 @@ namespace BLL.CentralCave.Services
                     throw new InvalidCredentialsException("the name or password does not match");
                 }
 
-                user.SavingAccount = accountRepository.GetSavingAccount(user.Id);
-                user.Wallet = accountRepository.GetWallet(user.Id);
+                user.SavingAccount = accountRepository.GetOne(user.Id, Currency.ARS);
+                user.Wallet = accountRepository.GetOne(user.Id, Currency.BTC);
                 return user;
             });
         }

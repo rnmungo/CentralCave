@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Domain.CentralCave;
+using Domain.CentralCave.Enums;
 using DAL.CentralCave.Contracts;
 using DAL.CentralCave.Tools;
 using DAL.CentralCave.Repositories.SqlServer.Adapters;
@@ -11,14 +12,9 @@ namespace DAL.CentralCave.Repositories.SqlServer
     public class AccountRepository : IAccountRelationship<Account, Movement>
     {
         #region Statements
-        private string SelectOneWalletStatement
+        private string SelectOneStatement
         {
-            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE IdUser = @IdUser AND CUIT IS NULL";
-        }
-
-        private string SelectOneSavingAccountStatement
-        {
-            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE IdUser = @IdUser AND CUIT IS NOT NULL";
+            get => "SELECT Id, CreatedAt, CBU, Currency, IdUser FROM [dbo].[Accounts] WHERE IdUser = @IdUser AND Currency = @Currency";
         }
 
         private string SelectAllRelationsStatement
@@ -27,13 +23,17 @@ namespace DAL.CentralCave.Repositories.SqlServer
         }
         #endregion
 
-        public Account GetWallet(Guid idUser)
+        public Account GetOne(Guid idUser, Currency currency)
         {
             Account account = default;
 
             try
             {
-                using (var dr = SqlHelper.ExecuteReader(SelectOneWalletStatement, System.Data.CommandType.Text, new SqlParameter("@IdUser", idUser)))
+                using (var dr = SqlHelper.ExecuteReader(
+                    SelectOneStatement,
+                    System.Data.CommandType.Text,
+                    new SqlParameter("@IdUser", idUser),
+                    new SqlParameter("@Currency", currency)))
                 {
                     if (dr.Read())
                     {
@@ -45,31 +45,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.Current.Handle(this, ex);
-            }
-
-            return account;
-        }
-
-        public Account GetSavingAccount(Guid idUser)
-        {
-            Account account = default;
-
-            try
-            {
-                using (var dr = SqlHelper.ExecuteReader(SelectOneSavingAccountStatement, System.Data.CommandType.Text, new SqlParameter("@IdUser", idUser)))
-                {
-                    if (dr.Read())
-                    {
-                        object[] values = new object[dr.FieldCount];
-                        dr.GetValues(values);
-                        account = AccountAdapter.Current.Adapt(values);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
 
             return account;
@@ -80,7 +56,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             List<Movement> movements = new List<Movement>();
             try
             {
-                using (var dr = SqlHelper.ExecuteReader(SelectAllRelationsStatement, System.Data.CommandType.StoredProcedure, new SqlParameter("@IdAccount", entity.Id)))
+                using (var dr = SqlHelper.ExecuteReader(SelectAllRelationsStatement, System.Data.CommandType.Text, new SqlParameter("@IdAccount", entity.Id)))
                 {
                     while (dr.Read())
                     {
@@ -93,7 +69,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
 
             return movements;

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DAL.CentralCave.Contracts;
 using DAL.CentralCave.Factories;
 using Domain.CentralCave;
+using Domain.CentralCave.Enums;
 using BLL.CentralCave.Contracts;
 using BLL.CentralCave.BusinessExceptions;
-using System.Collections.Generic;
 
 namespace BLL.CentralCave.Services
 {
@@ -61,7 +62,7 @@ namespace BLL.CentralCave.Services
 
                 Movement output = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.CONVERSION,
+                    Reason = Reason.CONVERSION,
                     IdAccount = origin.Id,
                     IdTransaction = transaction.Id,
                     Amount = -amount
@@ -70,7 +71,7 @@ namespace BLL.CentralCave.Services
 
                 Movement input = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.CONVERSION,
+                    Reason = Reason.CONVERSION,
                     IdAccount = destination.Id,
                     IdTransaction = transaction.Id,
                     Amount = amount * conversion.Rate
@@ -98,7 +99,7 @@ namespace BLL.CentralCave.Services
 
                 Movement movement = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.DEPOSIT,
+                    Reason = Reason.DEPOSIT,
                     IdAccount = account.Id,
                     IdTransaction = transaction.Id,
                     Amount = amount
@@ -112,6 +113,11 @@ namespace BLL.CentralCave.Services
             if (amount <= 0)
             {
                 throw new InvalidTransactionException("the amount must be greater than zero");
+            }
+
+            if (origin.Currency != destination.Currency)
+            {
+                throw new InvalidTransactionException($"the destination account is not an {origin.Currency} account");
             }
 
             System.Transactions.TransactionOptions options = new System.Transactions.TransactionOptions()
@@ -132,7 +138,7 @@ namespace BLL.CentralCave.Services
 
                 Movement output = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.TRANSFER,
+                    Reason = Reason.TRANSFER,
                     IdAccount = origin.Id,
                     IdTransaction = transaction.Id,
                     Amount = -amount
@@ -141,7 +147,7 @@ namespace BLL.CentralCave.Services
 
                 Movement input = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.TRANSFER,
+                    Reason = Reason.TRANSFER,
                     IdAccount = destination.Id,
                     IdTransaction = transaction.Id,
                     Amount = amount
@@ -153,9 +159,5 @@ namespace BLL.CentralCave.Services
         public decimal GetSaldo(Account account) => accountRepository.GetRelated(account).Sum(m => m.Amount);
 
         public List<Movement> GetMovements(Account account) => accountRepository.GetRelated(account);
-
-        public Account GetWallet(Guid idUser) => accountRepository.GetWallet(idUser);
-
-        public Account GetSavingAccount(Guid idUser) => accountRepository.GetSavingAccount(idUser);
     }
 }

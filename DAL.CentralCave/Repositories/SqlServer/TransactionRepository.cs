@@ -26,7 +26,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // SL.Services.ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
         }
     }

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 using BLL.CentralCave.BusinessExceptions;
-using BLL.CentralCave.Contracts;
 using BLL.CentralCave.Services;
 using Domain.CentralCave;
 using SL.CentralCave.Services;
+using UI.CentralCave.Forms.Accounts;
 
 namespace UI.CentralCave
 {
@@ -22,14 +21,27 @@ namespace UI.CentralCave
             try
             {
                 _user = UserService.Current.Login(tbName.Text, tbPassword.Text);
-                tbName.ReadOnly = true;
-                tbPassword.ReadOnly = true;
-                btnLogin.Enabled = false;
+                DisableFields();
+                AccountsForm form = new AccountsForm(_user) { TopLevel = false, TopMost = true };
+                rightPanel.Controls.Add(form);
+                form.Show();
             }
             catch (InvalidCredentialsException ex)
             {
                 MessageBox.Show(LanguageManager.Current.Translate(ex.Message));
             }
+        }
+
+        private void DisableFields()
+        {
+            tbName.ReadOnly = true;
+            tbPassword.ReadOnly = true;
+            btnLogin.Enabled = false;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

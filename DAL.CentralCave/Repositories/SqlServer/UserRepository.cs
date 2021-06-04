@@ -12,7 +12,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
         #region Statements
         private string SelectStatement
         {
-            get => "SELECT Id, Name, IdWallet, IdSavingAccount FROM [dbo].[Users] WHERE Name = @Name AND Password = @Password";
+            get => "SELECT Id, Name, CUIT FROM [dbo].[Users] WHERE Name = @Name AND Password = @Password";
         }
         #endregion
 
@@ -38,7 +38,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
 
             return user;
