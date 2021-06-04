@@ -29,7 +29,7 @@ namespace SL.CentralCave.Services
             string word = key;
             string cultureCode = Thread.CurrentThread.CurrentUICulture.Name;
 
-            using (StreamReader streamReader = new StreamReader(string.Format(@"I18n\idioma.{0}", cultureCode)))
+            using (StreamReader streamReader = new StreamReader(string.Format(@"I18n\language.{0}", cultureCode)))
             {
                 while (!streamReader.EndOfStream)
                 {
