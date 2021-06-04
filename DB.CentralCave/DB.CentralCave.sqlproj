@@ -65,4 +65,7 @@
     <Build Include="tables\Conversions.sql" />
     <Build Include="tables\Movements.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="DB.CentralCave.refactorlog" />
+  </ItemGroup>
 </Project>

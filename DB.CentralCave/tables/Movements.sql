@@ -4,7 +4,7 @@
     [CreatedAt] DATETIME NOT NULL DEFAULT GETDATE(), 
     [Reason] INT NOT NULL, 
     [IdAccount] UNIQUEIDENTIFIER NOT NULL, 
-    [Amount] DECIMAL(10, 9) NOT NULL, 
+    [Amount] DECIMAL(30, 20) NOT NULL, 
     [IdTransaction] BIGINT NOT NULL
 )
 

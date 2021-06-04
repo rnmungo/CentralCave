@@ -5,7 +5,8 @@
     [CBU] BIGINT NOT NULL, 
     [CUIT] BIGINT NULL, 
     [Currency] INT NOT NULL, 
-    [IdUser] UNIQUEIDENTIFIER NULL
+    [IdUser] UNIQUEIDENTIFIER NULL, 
+    CONSTRAINT [AK_Accounts_CBU] UNIQUE ([CBU]) 
 )
 
 GO
