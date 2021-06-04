@@ -46,14 +46,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Forms\Accounts\AccountsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\Accounts\AccountsForm.Designer.cs">
+      <DependentUpon>AccountsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Accounts\TransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Accounts\TransferForm.Designer.cs">
+      <DependentUpon>TransferForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\Accounts\AccountsForm.resx">
+      <DependentUpon>AccountsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Accounts\TransferForm.resx">
+      <DependentUpon>TransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +83,10 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="I18n\language.es-AR" />
+    <None Include="I18n\language.es-ES" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +99,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL.CentralCave\BLL.CentralCave.csproj">
+      <Project>{dcbcab20-15a1-4b42-bbce-f9d3d8b0bb1f}</Project>
+      <Name>BLL.CentralCave</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.CentralCave\Domain.CentralCave.csproj">
+      <Project>{2cf3068d-1b9e-4a0c-bfa0-077a3ff1bcb9}</Project>
+      <Name>Domain.CentralCave</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SL.CentralCave\SL.CentralCave.csproj">
+      <Project>{f3926a22-ceff-46fa-95b5-a9ea58b55404}</Project>
+      <Name>SL.CentralCave</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bitcoin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross-sign.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

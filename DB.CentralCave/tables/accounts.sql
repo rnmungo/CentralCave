@@ -1,0 +1,13 @@
+﻿CREATE TABLE [dbo].[Accounts]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID(), 
+    [CreatedAt] DATETIME NOT NULL DEFAULT GETDATE(), 
+    [CBU] BIGINT NOT NULL, 
+    [Currency] INT NOT NULL, 
+    [IdUser] UNIQUEIDENTIFIER NULL, 
+    CONSTRAINT [AK_Accounts_CBU] UNIQUE ([CBU]) 
+)
+
+GO
+
+CREATE INDEX [IX_accounts_CBU] ON [dbo].[accounts] ([CBU])

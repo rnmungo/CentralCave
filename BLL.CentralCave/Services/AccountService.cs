@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DAL.CentralCave.Contracts;
 using DAL.CentralCave.Factories;
 using Domain.CentralCave;
+using Domain.CentralCave.Enums;
 using BLL.CentralCave.Contracts;
 using BLL.CentralCave.BusinessExceptions;
-using System.Collections.Generic;
 
 namespace BLL.CentralCave.Services
 {
@@ -13,7 +14,8 @@ namespace BLL.CentralCave.Services
     {
         IInserter<Movement> movementRepository = Factory.Current.GetMovementRepository();
         IInserter<Transaction> transactionRepository = Factory.Current.GetTransactionRepository();
-        IGetterRelationship<Account, Movement> accountRepository = Factory.Current.GetAccountRepository();
+        IAccountRelationship<Account, Movement> accountRepository = Factory.Current.GetAccountRepository();
+        IGetterConversion conversionRepository = Factory.Current.GetConversionRepository();
 
         #region Singleton
         private readonly static AccountService _instance = new AccountService();
@@ -31,7 +33,52 @@ namespace BLL.CentralCave.Services
 
         public void ConvertTo(Account origin, Account destination, decimal amount)
         {
-            throw new NotImplementedException();
+            if (amount <= 0)
+            {
+                throw new InvalidTransactionException("the amount must be greater than zero");
+            }
+
+            System.Transactions.TransactionOptions options = new System.Transactions.TransactionOptions()
+            {
+                IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted
+            };
+
+            SurroundTransaction(() =>
+            {
+                Conversion conversion = conversionRepository.GetLast(origin.Currency, destination.Currency);
+                if (conversion is null)
+                {
+                    throw new InvalidTransactionException("conversion rate not found");
+                }
+
+                List<Movement> movements = accountRepository.GetRelated(origin);
+                decimal saldo = movements.Sum(m => m.Amount);
+                if (saldo < amount)
+                {
+                    throw new InvalidTransactionException("the balance is insufficient");
+                }
+
+                Transaction transaction = new Transaction();
+                transactionRepository.Insert(transaction);
+
+                Movement output = new Movement()
+                {
+                    Reason = Reason.CONVERSION,
+                    IdAccount = origin.Id,
+                    IdTransaction = transaction.Id,
+                    Amount = -amount
+                };
+                movementRepository.Insert(output);
+
+                Movement input = new Movement()
+                {
+                    Reason = Reason.CONVERSION,
+                    IdAccount = destination.Id,
+                    IdTransaction = transaction.Id,
+                    Amount = amount * conversion.Rate
+                };
+                movementRepository.Insert(input);
+            }, options);
         }
 
         public void Deposit(Account account, decimal amount)
@@ -50,9 +97,10 @@ namespace BLL.CentralCave.Services
             {
                 Transaction transaction = new Transaction();
                 transactionRepository.Insert(transaction);
+
                 Movement movement = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.DEPOSIT,
+                    Reason = Reason.DEPOSIT,
                     IdAccount = account.Id,
                     IdTransaction = transaction.Id,
                     Amount = amount
@@ -68,6 +116,11 @@ namespace BLL.CentralCave.Services
                 throw new InvalidTransactionException("the amount must be greater than zero");
             }
 
+            if (origin.Currency != destination.Currency)
+            {
+                throw new InvalidTransactionException($"the destination account is not an {origin.Currency} account");
+            }
+
             System.Transactions.TransactionOptions options = new System.Transactions.TransactionOptions()
             {
                 IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted
@@ -76,16 +129,18 @@ namespace BLL.CentralCave.Services
             SurroundTransaction(() =>
             {
                 List<Movement> movements = accountRepository.GetRelated(origin);
-                if (movements.Sum(m => m.Amount) < amount)
+                decimal saldo = movements.Sum(m => m.Amount);
+                if (saldo < amount)
                 {
                     throw new InvalidTransactionException("the balance is insufficient");
                 }
 
                 Transaction transaction = new Transaction();
                 transactionRepository.Insert(transaction);
+
                 Movement output = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.TRANSFER,
+                    Reason = Reason.TRANSFER,
                     IdAccount = origin.Id,
                     IdTransaction = transaction.Id,
                     Amount = -amount
@@ -94,7 +149,7 @@ namespace BLL.CentralCave.Services
 
                 Movement input = new Movement()
                 {
-                    Reason = Domain.CentralCave.Enums.Reason.TRANSFER,
+                    Reason = Reason.TRANSFER,
                     IdAccount = destination.Id,
                     IdTransaction = transaction.Id,
                     Amount = amount
@@ -103,6 +158,10 @@ namespace BLL.CentralCave.Services
             }, options);
         }
 
-        public Account GetOne(long cbu) => accountRepository.GetOne(cbu);
+        public decimal GetSaldo(Account account) => accountRepository.GetRelated(account).Sum(m => m.Amount);
+
+        public List<Movement> GetMovements(Account account) => accountRepository.GetRelated(account);
+
+        public Account GetByCBU(long cbu) => accountRepository.GetOne(cbu);
     }
 }

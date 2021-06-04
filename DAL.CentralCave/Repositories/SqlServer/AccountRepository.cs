@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Domain.CentralCave;
+using Domain.CentralCave.Enums;
 using DAL.CentralCave.Contracts;
 using DAL.CentralCave.Tools;
 using DAL.CentralCave.Repositories.SqlServer.Adapters;
 
 namespace DAL.CentralCave.Repositories.SqlServer
 {
-    public class AccountRepository : IGetterRelationship<Account, Movement>
+    public class AccountRepository : IAccountRelationship<Account, Movement>
     {
-        #region
-        private string SelectOneByIDStatement
+        #region Statements
+        private string SelectOneStatement
         {
-            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE Id = @Id";
+            get => "SELECT Id, CreatedAt, CBU, Currency, IdUser FROM [dbo].[Accounts] WHERE IdUser = @IdUser AND Currency = @Currency";
         }
 
-        private string SelectOneByCBUStatement
+        private string SelectByCBUStatement
         {
-            get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE CBU = @CBU";
+            get => "SELECT Id, CreatedAt, CBU, Currency, IdUser FROM [dbo].[Accounts] WHERE CBU = @CBU";
         }
 
         private string SelectAllRelationsStatement
@@ -27,13 +28,17 @@ namespace DAL.CentralCave.Repositories.SqlServer
         }
         #endregion
 
-        public Account GetOne(Guid id)
+        public Account GetOne(Guid idUser, Currency currency)
         {
             Account account = default;
 
             try
             {
-                using (var dr = SqlHelper.ExecuteReader(SelectOneByIDStatement, System.Data.CommandType.Text, new SqlParameter("@Id", id)))
+                using (var dr = SqlHelper.ExecuteReader(
+                    SelectOneStatement,
+                    System.Data.CommandType.Text,
+                    new SqlParameter("@IdUser", idUser),
+                    new SqlParameter("@Currency", currency)))
                 {
                     if (dr.Read())
                     {
@@ -45,19 +50,22 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
 
             return account;
         }
 
-        public Account GetOne(long code)
+        public Account GetOne(long cbu)
         {
             Account account = default;
 
             try
             {
-                using (var dr = SqlHelper.ExecuteReader(SelectOneByCBUStatement, System.Data.CommandType.Text, new SqlParameter("@CBU", code)))
+                using (var dr = SqlHelper.ExecuteReader(
+                    SelectByCBUStatement,
+                    System.Data.CommandType.Text,
+                    new SqlParameter("@CBU", cbu)))
                 {
                     if (dr.Read())
                     {
@@ -69,7 +77,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
 
             return account;
@@ -80,7 +88,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             List<Movement> movements = new List<Movement>();
             try
             {
-                using (var dr = SqlHelper.ExecuteReader(SelectAllRelationsStatement, System.Data.CommandType.StoredProcedure, new SqlParameter("@IdAccount", entity.Id)))
+                using (var dr = SqlHelper.ExecuteReader(SelectAllRelationsStatement, System.Data.CommandType.Text, new SqlParameter("@IdAccount", entity.Id)))
                 {
                     while (dr.Read())
                     {
@@ -93,7 +101,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
 
             return movements;

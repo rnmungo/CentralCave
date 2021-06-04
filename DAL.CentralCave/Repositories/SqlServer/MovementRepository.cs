@@ -8,10 +8,10 @@ namespace DAL.CentralCave.Repositories.SqlServer
 {
     internal class MovementRepository : IInserter<Movement>
     {
-        #region
+        #region Statements
         private string InsertStatement
         {
-            get => "INSERT INTO [dbo].[Movements] (Reason, IdAccount, Amount, IdTransaction) VALUES (@Reason, @IdAccount, @Amount, @IdTransaction)";
+            get => "INSERT INTO [dbo].[Movements] (Reason, IdAccount, Amount, IdTransaction) OUTPUT Inserted.Id VALUES (@Reason, @IdAccount, @Amount, @IdTransaction)";
         }
         #endregion
 
@@ -29,7 +29,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
             }
             catch (Exception ex)
             {
-                // SL.Services.ExceptionManager.Current.Handle(this, ex);
+                throw ex;
             }
         }
     }

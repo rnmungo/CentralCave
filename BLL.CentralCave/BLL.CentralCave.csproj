@@ -47,11 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessExceptions\InvalidCredentialsException.cs" />
     <Compile Include="BusinessExceptions\InvalidTransactionException.cs" />
     <Compile Include="Contracts\IAccountService.cs" />
+    <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -62,6 +65,10 @@
     <ProjectReference Include="..\Domain.CentralCave\Domain.CentralCave.csproj">
       <Project>{2cf3068d-1b9e-4a0c-bfa0-077a3ff1bcb9}</Project>
       <Name>Domain.CentralCave</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SL.CentralCave\SL.CentralCave.csproj">
+      <Project>{f3926a22-ceff-46fa-95b5-a9ea58b55404}</Project>
+      <Name>SL.CentralCave</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

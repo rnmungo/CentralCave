@@ -6,9 +6,7 @@ namespace Domain.CentralCave
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Password { get; set; }
-        public Guid IdWallet { get; set; }
-        public Guid IdSavingAccount { get; set; }
+        public long CUIT { get; set; }
 
         public Account Wallet { get; set; }
         public Account SavingAccount { get; set; }

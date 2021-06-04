@@ -7,6 +7,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
 {
     public sealed class MovementAdapter : IEntityAdapter<Movement>
     {
+        #region Singleton
         private readonly static MovementAdapter _instance = new MovementAdapter();
 
         public static MovementAdapter Current
@@ -16,6 +17,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
                 return _instance;
             }
         }
+        #endregion
 
         public Movement Adapt(object[] values)
         {
@@ -26,6 +28,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
                 Reason = (Reason)int.Parse(values[(int)Columns.REASON].ToString()),
                 IdAccount = Guid.Parse(values[(int)Columns.ACCOUNT].ToString()),
                 Amount = decimal.Parse(values[(int)Columns.AMOUNT].ToString()),
+                IdTransaction = long.Parse(values[(int)Columns.ID_TRANSACTION].ToString())
             };
         }
 
@@ -35,7 +38,8 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
             CREATED_AT,
             REASON,
             ACCOUNT,
-            AMOUNT
+            AMOUNT,
+            ID_TRANSACTION
         }
     }
 }

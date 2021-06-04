@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Conversions]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID(), 
+    [CreatedAt] DATETIME NOT NULL DEFAULT GETDATE(), 
+    [Rate] DECIMAL(30, 20) NOT NULL, 
+    [Origin] INT NOT NULL, 
+    [Destination] INT NOT NULL
+)

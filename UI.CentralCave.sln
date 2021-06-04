@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.CentralCave", "BLL.Cent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SL.CentralCave", "SL.CentralCave\SL.CentralCave.csproj", "{F3926A22-CEFF-46FA-95B5-A9EA58B55404}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB.CentralCave", "DB.CentralCave\DB.CentralCave.sqlproj", "{84DEE2EA-97EB-46C1-970E-E29676656094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{F3926A22-CEFF-46FA-95B5-A9EA58B55404}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3926A22-CEFF-46FA-95B5-A9EA58B55404}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3926A22-CEFF-46FA-95B5-A9EA58B55404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84DEE2EA-97EB-46C1-970E-E29676656094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84DEE2EA-97EB-46C1-970E-E29676656094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84DEE2EA-97EB-46C1-970E-E29676656094}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{84DEE2EA-97EB-46C1-970E-E29676656094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84DEE2EA-97EB-46C1-970E-E29676656094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84DEE2EA-97EB-46C1-970E-E29676656094}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
