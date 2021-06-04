@@ -10,7 +10,7 @@ namespace Domain.CentralCave
         public Reason Reason { get; set; }
         public Guid IdAccount { get; set; }
         public decimal Amount { get; set; }
-        public Guid IdTransaction { get; set; }
+        public long IdTransaction { get; set; }
 
         public Account Account { get; set; }
     }

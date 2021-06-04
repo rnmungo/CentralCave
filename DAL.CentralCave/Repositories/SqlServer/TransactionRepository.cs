@@ -11,7 +11,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
         #region Statements
         private string InsertStatement
         {
-            get => "INSERT INTO [dbo].[Transactions] (IdUser) VALUES (@IdUser)";
+            get => "INSERT INTO [dbo].[Transactions] (IdUser) OUTPUT Inserted.Id VALUES (@IdUser)";
         }
         #endregion
 
@@ -19,7 +19,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
         {
             try
             {
-                entity.Id = (Guid)SqlHelper.ExecuteScalar(
+                entity.Id = (long)SqlHelper.ExecuteScalar(
                     InsertStatement,
                     System.Data.CommandType.Text,
                     new SqlParameter("@IdUser", entity.IdUser));
