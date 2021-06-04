@@ -5,7 +5,7 @@ using DAL.CentralCave.Contracts;
 
 namespace DAL.CentralCave.Repositories.SqlServer.Adapters
 {
-    public class ConversionAdapter : IEntityAdapter<Conversion>
+    public sealed class ConversionAdapter : IEntityAdapter<Conversion>
     {
         #region Singleton
         private readonly static ConversionAdapter _instance = new ConversionAdapter();

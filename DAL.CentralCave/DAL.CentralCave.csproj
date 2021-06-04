@@ -55,6 +55,7 @@
     <Compile Include="Repositories\SqlServer\Adapters\AccountAdapter.cs" />
     <Compile Include="Repositories\SqlServer\Adapters\ConversionAdapter.cs" />
     <Compile Include="Repositories\SqlServer\Adapters\MovementAdapter.cs" />
+    <Compile Include="Repositories\SqlServer\Adapters\UserAdapter.cs" />
     <Compile Include="Repositories\SqlServer\ConversionRepository.cs" />
     <Compile Include="Repositories\SqlServer\MovementRepository.cs" />
     <Compile Include="Repositories\SqlServer\TransactionRepository.cs" />

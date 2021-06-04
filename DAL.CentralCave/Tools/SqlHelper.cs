@@ -11,7 +11,7 @@ namespace DAL.CentralCave.Tools
 
         static SqlHelper()
         {
-            conString = ConfigurationManager.ConnectionStrings["MainConString"].ConnectionString;
+            conString = ConfigurationManager.ConnectionStrings["DbCentralCave"].ConnectionString;
         }
         public static Int32 ExecuteNonQuery(String commandText,
             CommandType commandType, params SqlParameter[] parameters)
