@@ -1,4 +1,5 @@
-﻿using Domain.CentralCave;
+﻿using System.Collections.Generic;
+using Domain.CentralCave;
 
 namespace BLL.CentralCave.Contracts
 {
@@ -8,5 +9,7 @@ namespace BLL.CentralCave.Contracts
         void ConvertTo(Account origin, Account destination, decimal amount);
         void Transfer(Account origin, Account destination, decimal amount);
         Account GetOne(long cbu);
+        decimal GetSaldo(Account account);
+        List<Movement> GetMovements(Account account);
     }
 }

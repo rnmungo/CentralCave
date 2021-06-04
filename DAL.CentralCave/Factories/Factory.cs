@@ -55,5 +55,14 @@ namespace DAL.CentralCave.Factories
         {
             return new AccountRepository();
         }
+
+        /// <summary>
+        /// Make a Conversions Repository
+        /// </summary>
+        /// <returns>Conversions Repository</returns>
+        public IGetterConversion GetConversionRepository()
+        {
+            return new ConversionRepository();
+        }
     }
 }

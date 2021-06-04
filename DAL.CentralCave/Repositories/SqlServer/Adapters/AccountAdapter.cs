@@ -7,6 +7,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
 {
     public sealed class AccountAdapter : IEntityAdapter<Account>
     {
+        #region Singleton
         private readonly static AccountAdapter _instance = new AccountAdapter();
 
         public static AccountAdapter Current
@@ -16,6 +17,7 @@ namespace DAL.CentralCave.Repositories.SqlServer.Adapters
                 return _instance;
             }
         }
+        #endregion
 
         public Account Adapt(object[] values)
         {

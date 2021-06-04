@@ -10,7 +10,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
 {
     public class AccountRepository : IGetterRelationship<Account, Movement>
     {
-        #region
+        #region Statements
         private string SelectOneByIDStatement
         {
             get => "SELECT Id, CreatedAt, CBU, CUIT, Currency, IdUser FROM [dbo].[Accounts] WHERE Id = @Id";

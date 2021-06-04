@@ -8,7 +8,7 @@ namespace DAL.CentralCave.Repositories.SqlServer
 {
     internal class TransactionRepository : IInserter<Transaction>
     {
-        #region
+        #region Statements
         private string InsertStatement
         {
             get => "INSERT INTO [dbo].[Transactions] (IdUser) VALUES (@IdUser)";
